@@ -1,3 +1,10 @@
+const readline = require('readline');
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
 const calculateNetSalary = (basicSalary, benefits) => {
     const grossSalary = basicSalary + benefits;
     const payee = calculatePayee(grossSalary);
@@ -54,4 +61,18 @@ const calculateNetSalary = (basicSalary, benefits) => {
     return nssfTier1Limit * nssfRate + (nssfTier2Limit - nssfTier1Limit) * nssfRate;
   };
 
-  console.log(calculateNetSalary());
+  const promptUserInput = () => {
+    rl.question('Enter the basic salary: ', (basicSalaryInput) => {
+        const basicSalary = parseFloat(basicSalaryInput);
+        rl.question('Enter the benefits: ', (benefitsInput) => {
+            const benefits = parseFloat(benefitsInput);
+            const salaryDetails = calculateNetSalary(basicSalary, benefits);
+
+            console.log("Salary Details:", salaryDetails);
+            rl.close();
+        });
+    });
+};
+
+console.log(promptUserInput());
+
